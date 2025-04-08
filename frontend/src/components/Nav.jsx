@@ -3,9 +3,11 @@ import { MdOutlineShoppingBag } from "react-icons/md";
 import { navlinks } from "../data/data";
 import MobileNavButton from "./MobileNavButton";
 import MobileNav from "./MobileNav";
+import { Link, useLocation } from "react-router-dom";
 
 const Nav = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation();
 
   return (
     <>
@@ -17,10 +19,17 @@ const Nav = () => {
         </div>
         <div className="hidden md:flex items-center justify-center gap-12 font-medium text-gray-400">
           {navlinks.map((link) => {
+            const isActive = location.pathname === link.to;
             return (
-              <a href="" key={link.id} className="hover:text-gray-800">
+              <Link
+                key={link.id}
+                to={link.to}
+                className={`text-sm font-medium relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 hover:after:w-full ${
+                  isActive ? "text-gray-800" : "text-gray-500"
+                }`}
+              >
                 {link.title}
-              </a>
+              </Link>
             );
           })}
           <MdOutlineShoppingBag
